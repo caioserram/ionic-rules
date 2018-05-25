@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
-import { Engine, RuleEngine } from 'json-rules-engine'
+import { Engine, } from 'json-rules-engine'
 
 @Component({
   selector: 'page-home',
