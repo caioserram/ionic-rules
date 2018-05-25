@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  The world is your oyster.
+  <p>
+    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+  </p>
+<div *ngIf="questions[currentQuestion] && !decisionReached">
+  <p>{{questions[currentQuestion].text}}</p>
+</div>
+
+<div *ngIf="decisionReached">
+  <p>{{decisions[currentDecision].text}}</p>
+</div>
+
+<div *ngIf="!decisionReached">
+  <button ion-button (click)="runAnswer('n')">Não</button>
+  <button ion-button (click)="runAnswer('s')">Sim</button>
+  
+</div>
+<button ion-button *ngIf="factStack.length > 1" (click)="rollback()">Rollback</button>
+
+</ion-content>
