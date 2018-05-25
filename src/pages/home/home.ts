@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { Engine, RuleEngine } from 'json-rules-engine'
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  factStack: any = [];
+  factStack: any = new Array();
   currentDecision: any;
   decisionReached: boolean = false;
   currentQuestion: any;
@@ -97,18 +96,7 @@ export class HomePage {
       //priority: 1
     })
 
-    this.factStack.push(Object.assign({}, this.facts))
-    this.engine.on('success', async (event, almanac) => {
-      if (event.type === 'question') {
-        this.facts[event.params.value] = this.currentAnswer
-        this.currentQuestion = event.params.value
-      }
-      if (event.type === 'decision') {
-        this.decisionReached = true
-        this.currentDecision = event.params.value
-      }
-    });
-
+    
   }
 
 
@@ -116,7 +104,6 @@ export class HomePage {
     if (this.factStack.length > 1) {
       this.decisionReached = false
       this.factStack.pop()
-      console.log(this.factStack[this.factStack.length - 1])
       this.engine
         .run(this.factStack[this.factStack.length - 1])
         .then((events) => {
@@ -148,7 +135,19 @@ export class HomePage {
       q1: "null",
       q2: "null"
     }
-    
+
+    this.factStack.push(Object.assign({}, this.facts))
+    this.engine.on('success', async (event, almanac) => {
+      if (event.type === 'question') {
+        this.facts[event.params.value] = this.currentAnswer
+        this.currentQuestion = event.params.value
+      }
+      if (event.type === 'decision') {
+        this.decisionReached = true
+        this.currentDecision = event.params.value
+      }
+    });
+
 
     this.engine
       .run(this.facts)
